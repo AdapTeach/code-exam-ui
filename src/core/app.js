@@ -2,6 +2,7 @@ angular.module('app',[
   'ngMaterial',
   'ui.router',
   'ui.ace',
+  'angular-persona-jwt',
   'auth'
 ]).constant('BACKEND',{
   AUTH : 'http://localhost:5011'

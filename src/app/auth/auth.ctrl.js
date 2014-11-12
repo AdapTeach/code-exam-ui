@@ -1,4 +1,4 @@
 angular.module('auth')
-  .controller('LoginCtrl', function () {
-
+  .controller('LoginCtrl', function (persona) {
+    console.log(persona);
   });
