@@ -6,7 +6,8 @@
         "angular": "*",
         "angular-ui-router" : "*",
         "angular-ui-ace": "*",
-        "angular-material" : "*"
+        "angular-material" : "*",
+        "angular-persona-jwt" : "*"
     },
     "devDependencies": {
         "angular-mocks": "*"
