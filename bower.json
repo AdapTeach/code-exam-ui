@@ -1,0 +1,14 @@
+{
+    "name": "code-exam-ui",
+    "description": "",
+    "version": "0.0.1",
+    "dependencies": {
+        "angular": "*",
+        "angular-ui-router" : "*",
+        "angular-ui-ace": "*",
+        "angular-material" : "*"
+    },
+    "devDependencies": {
+        "angular-mocks": "*"
+    }
+}
