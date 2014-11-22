@@ -6,7 +6,7 @@ angular.module('auth', [
     .config(function ($stateProvider, personaProvider) {
         personaProvider.config({
             baseUrl: 'http://localhost:5100',
-            tokenName: 'tokenModif'
+            tokenName: 'code-exam-token'
         });
         $stateProvider.state('login', {
             url: '/login',

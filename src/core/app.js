@@ -16,21 +16,15 @@ angular.module('app', [
         $locationProvider.html5Mode(true);
     })
 
-    .run(function (persona, $rootScope, $mdToast, $state) {
+    .run(function (persona, $rootScope, $mdToast) {
         $rootScope.$watch(function () {
-            return persona.loggedUser;
-        }, function (loggedUser) {
-            if (loggedUser) {
-                if (loggedUser.email) {
-                    $mdToast.show({
-                        template: '<md-toast>Logged In !!</md-toast>'
-                    });
-                    $state.go('exam', {id: 5});
-                } else {
-                    $mdToast.show({
-                        template: '<md-toast>error !!</md-toast>'
-                    });
-                }
+            return persona;
+        }, function () {
+            if (persona.loggedUser) {
+                $mdToast.show({
+                    template: '<md-toast>Logged In !!</md-toast>'
+                });
             }
-        });
-    });
+        }, true);
+    })
+;
