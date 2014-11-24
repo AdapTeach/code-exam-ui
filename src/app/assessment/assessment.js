@@ -27,6 +27,13 @@ angular.module('assessment', [
         $stateProvider.state('assessment', {
             url: '/:sessionId/:assessmentId',
             controller: 'AssessmentController',
-            templateUrl: 'assessment/assessment.tpl.html'
+            templateUrl: 'assessment/assessment.tpl.html',
+            resolve: {
+                assessment: function ($stateParams, Assessments) {
+                    return Assessments.load($stateParams.sessionId, $stateParams.assessmentId).then(function (response) {
+                        console.log(response);
+                    });
+                }
+            }
         });
     });

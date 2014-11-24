@@ -4,7 +4,7 @@ angular.module('exam', [
 
     .config(function ($stateProvider) {
         $stateProvider.state('exam', {
-            url: '/exam/:id',
+            url: '/exam/:examId/:assessmentId',
             controller: 'ExamCtrl as exam',
             templateUrl: 'exam/exam.tpl.html'
         });
