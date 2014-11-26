@@ -1,15 +1,16 @@
 {
-    "name": "code-exam-ui",
-    "description": "",
-    "version": "0.0.1",
-    "dependencies": {
-        "angular": "*",
-        "angular-ui-router" : "*",
-        "angular-ui-ace": "*",
-        "angular-material" : "*",
-        "angular-persona-jwt" : "*"
-    },
-    "devDependencies": {
-        "angular-mocks": "*"
-    }
+  "name": "code-exam-ui",
+  "description": "",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "*",
+    "angular-ui-router": "*",
+    "angular-ui-ace": "*",
+    "angular-material": "*",
+    "angular-persona-jwt": "*",
+    "code-assessment-editor": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "*"
+  }
 }

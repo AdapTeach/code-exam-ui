@@ -17,7 +17,9 @@ var gulp = require('gulp'),
     minifyHtml = require('gulp-minify-html'),
     rev = require('gulp-rev'),
     sourcemaps = require('gulp-sourcemaps'),
-    templateCache = require('gulp-angular-templatecache');
+    templateCache = require('gulp-angular-templatecache'),
+    ts = require('gulp-typescript'),
+    eventStream = require('event-stream');
 
 var livereloadport = 35729,
     serverport = 5000;
@@ -33,7 +35,8 @@ devServer.all('/*', function (req, res) {
 
 // PATHS
 var pathToIndexFile = 'src/index.html';
-var pathToJsSource = ['src/app/**/*.js','src/core/**/*.js'];
+var pathToJsSource = ['src/app/**/*.js', 'src/core/**/*.js'];
+var pathToTsSource = ['src/app/**/*.ts', 'src/core/**/*.ts'];
 var pathToCssSource = 'src/app/**/*.scss';
 var pathToTemplates = 'src/app/**/*.html';
 
@@ -49,6 +52,7 @@ gulp.task('dev', [
 
 gulp.task('buildDev', [
     'buildJs',
+    'buildTs',
     'buildStyle',
     'cacheTemplates'
 ], function () {
@@ -57,10 +61,19 @@ gulp.task('buildDev', [
 gulp.task('buildJs', function () {
     gulp.src(pathToJsSource)
         .pipe(sourcemaps.init())
-        .pipe(concat('all-source.js'))
+        .pipe(concat('all-js-source.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('src/build'))
         .pipe(refresh(lrserver));
+});
+
+gulp.task('buildTs', function () {
+    gulp.src(pathToTsSource)
+        .pipe(ts({
+            declarationFiles: true
+        }))
+        .pipe(concat('all-ts-source.js'))
+        .pipe(gulp.dest('src/build'));
 });
 
 gulp.task('buildStyle', function () {
@@ -85,11 +98,11 @@ gulp.task('startDevServer', function () {
 
 gulp.task('watchSource', function () {
     gulp.watch(pathToJsSource, ['buildJs', 'lint']);
+    gulp.watch(pathToTsSource, ['buildTs']);
     gulp.watch(pathToCssSource, ['buildStyle']);
     gulp.watch(pathToIndexFile, ['reloadIndex']);
     gulp.watch(pathToTemplates, ['cacheTemplates']);
 });
-
 
 gulp.task('reloadIndex', function () {
     gulp.src(pathToIndexFile)

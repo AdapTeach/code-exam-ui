@@ -5,7 +5,8 @@ angular.module('app', [
     'angular-persona-jwt',
     'auth',
     'exam',
-    'assessment'
+    'assessment',
+    'at.assessment'
 ])
 
     .constant('BACKEND', {
