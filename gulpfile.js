@@ -30,7 +30,7 @@ var devServer = express();
 devServer.use(livereload({port: livereloadport}));
 devServer.use(express.static('./src'));
 devServer.all('/*', function (req, res) {
-    res.sendFile('index.html', {root: 'src'});
+    res.sendFile('index.html', {root: 'src/app'});
 });
 
 // PATHS
@@ -73,7 +73,8 @@ gulp.task('buildTs', function () {
             declarationFiles: true
         }))
         .pipe(concat('all-ts-source.js'))
-        .pipe(gulp.dest('src/build'));
+        .pipe(gulp.dest('src/build'))
+        .pipe(refresh(lrserver));
 });
 
 gulp.task('buildStyle', function () {

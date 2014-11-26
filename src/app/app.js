@@ -14,7 +14,7 @@ angular.module('app', [
     })
 
     .config(function ($locationProvider) {
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
     })
 
     .run(function (persona, $rootScope, $mdToast) {
