@@ -29,7 +29,6 @@ class AssessmentService {
     }
 
     submit:Function = (submission:Submission) => {
-        console.log(submission);
         this.$http.post(this.BACKEND.URL + 'session/' + this.sessionId + '/' + this.current.edited.id, submission)
             .success((submissionResult:SubmissionResult) => {
                 this.$window.alert('Submission successfully saved');
@@ -38,7 +37,11 @@ class AssessmentService {
             .error((error) => {
                 this.$window.alert(error);
             });
-    }
+    };
+
+    reset:Function = () => {
+        this.current.edited.compilationUnitsToSubmit = this.current.raw.compilationUnitsToSubmit;
+    };
 
 }
 
