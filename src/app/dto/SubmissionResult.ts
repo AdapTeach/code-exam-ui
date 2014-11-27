@@ -1,7 +1,8 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-class Submission {
+class SubmissionResult {
 
     compilationUnits:Array<CompilationUnit>;
+    hasCompilationErrors:boolean;
 
 }

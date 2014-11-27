@@ -3,14 +3,41 @@
 
 class AssessmentService {
 
-    current:Assessment = new Assessment();
+    current:{
+        raw:Assessment;
+        edited:Assessment;
+    };
+    sessionId:string;
+    latestSubmission:Submission;
 
-    constructor(private $http:ng.IHttpService, private BACKEND) {
+    constructor(private $http:ng.IHttpService, private $window:ng.IWindowService, private BACKEND) {
     }
 
     load(sessionId:string, assessmentId:string):ng.IHttpPromise<StudentAssessment> {
         return this.$http.get(this.BACKEND.URL + 'session/' + sessionId + '/' + assessmentId)
-            .success((data:StudentAssessment) => this.current = data.assessment);
+            .success((data:StudentAssessment) => {
+                this.sessionId = sessionId;
+                this.latestSubmission = data.latestSubmission;
+                var raw = data.assessment;
+                var edited = angular.copy(data.assessment);
+                edited.compilationUnitsToSubmit = angular.copy(this.latestSubmission.compilationUnits);
+                this.current = {
+                    raw: raw,
+                    edited: edited
+                }
+            });
+    }
+
+    submit:Function = (submission:Submission) => {
+        console.log(submission);
+        this.$http.post(this.BACKEND.URL + 'session/' + this.sessionId + '/' + this.current.edited.id, submission)
+            .success((submissionResult:SubmissionResult) => {
+                this.$window.alert('Submission successfully saved');
+                this.latestSubmission = submissionResult;
+            })
+            .error((error) => {
+                this.$window.alert(error);
+            });
     }
 
 }

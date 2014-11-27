@@ -1,5 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 class Assessment {
-    compilationUnits:Array<CompilationUnit>;
+    id:string;
+    providedCompilationUnits:Array<CompilationUnit>;
+    compilationUnitsToSubmit:Array<CompilationUnit>;
 }
