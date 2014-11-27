@@ -24,12 +24,18 @@ angular.module('assessment', [
         $stateProvider.state('assessment', {
             url: '/:sessionId/:assessmentId',
             templateUrl: 'assessment/assessment.tpl.html',
-            controller: function ($scope, AssessmentService:AssessmentService) {
+            controller: function ($scope, AssessmentService) {
                 $scope.AssessmentService = AssessmentService;
             },
             resolve: {
-                assessment: function ($stateParams, AssessmentService:AssessmentService) {
-                    return AssessmentService.load($stateParams.sessionId, $stateParams.assessmentId);
+                assessment: function ($stateParams, $state:ng.ui.IStateService, AssessmentService:AssessmentService) {
+                    return AssessmentService
+                        .load($stateParams.sessionId, $stateParams.assessmentId)
+                        .catch(function (response) {
+                            if (response.status === 401) {
+                                $state.go('login');
+                            }
+                        });
                 }
             }
         });

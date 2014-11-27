@@ -3,14 +3,16 @@ angular.module('auth', [
     'angular-persona-jwt'
 ])
 
-    .config(function ($stateProvider, personaProvider) {
+    .config(function ($stateProvider:ng.ui.IStateProvider, personaProvider) {
         personaProvider.config({
             baseUrl: 'http://localhost:5100',
             tokenName: 'code-exam-token'
         });
         $stateProvider.state('login', {
             url: '/login',
-            controller: 'LoginCtrl as user',
-            templateUrl: 'auth/auth.tpl.html'
+            templateUrl: 'login/login.tpl.html',
+            controller: function($scope, persona) {
+                $scope.persona = persona;
+            }
         });
     });
