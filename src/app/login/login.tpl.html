@@ -1,6 +1,11 @@
 <h1>Login</h1>
 
-<h3 ng-if="persona.loggedUser">Logged in as {{persona.loggedUser.email}}</h3>
+<div ng-if="persona.loggedUser">
+    <h3>Logged in as {{persona.loggedUser.email}}</h3>
+    <label>Student Email</label>
+    <input type="text" ng-model="StudentProfile.email"/>
+    <button ng-click="StudentProfile.save()">Save</button>
+</div>
 
 <persona-login ng-if="!persona.loggedUser">
     <md-button class="md-button md-deep-orange-theme">Login</md-button>
