@@ -10,3 +10,5 @@ node_modules
 typings/
 
 .awspublish-code-exam
+
+s3.js
