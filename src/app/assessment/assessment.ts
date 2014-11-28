@@ -38,7 +38,7 @@ class AssessmentService {
                 this.latestSubmission = submissionResult;
             })
             .error((error) => {
-                this.$window.alert(error);
+                this.$window.alert(error.message);
             });
     };
 
