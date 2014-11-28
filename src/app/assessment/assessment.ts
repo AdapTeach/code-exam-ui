@@ -10,17 +10,20 @@ class AssessmentService {
     sessionId:string;
     latestSubmission:Submission;
 
+    // @ngInject
     constructor(private $http:ng.IHttpService, private $window:ng.IWindowService, private BACKEND) {
     }
 
     load(sessionId:string, assessmentId:string):ng.IHttpPromise<StudentAssessment> {
-        return this.$http.get(this.BACKEND.URL + 'session/' + sessionId + '/' + assessmentId)
+        return this.$http.get(this.BACKEND.URL + '/session/' + sessionId + '/' + assessmentId)
             .success((data:StudentAssessment) => {
                 this.sessionId = sessionId;
                 this.latestSubmission = data.latestSubmission;
                 var raw = data.assessment;
                 var edited = angular.copy(data.assessment);
-                edited.compilationUnitsToSubmit = angular.copy(this.latestSubmission.compilationUnits);
+                if (this.latestSubmission) {
+                    edited.compilationUnitsToSubmit = angular.copy(this.latestSubmission.compilationUnits);
+                }
                 this.current = {
                     raw: raw,
                     edited: edited
@@ -29,7 +32,7 @@ class AssessmentService {
     }
 
     submit:Function = (submission:Submission) => {
-        this.$http.post(this.BACKEND.URL + 'session/' + this.sessionId + '/' + this.current.edited.id, submission)
+        this.$http.post(this.BACKEND.URL + '/session/' + this.sessionId + '/' + this.current.edited.id, submission)
             .success((submissionResult:SubmissionResult) => {
                 this.$window.alert('Submission successfully saved');
                 this.latestSubmission = submissionResult;

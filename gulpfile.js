@@ -16,10 +16,10 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-minify-css'),
     minifyHtml = require('gulp-minify-html'),
     rev = require('gulp-rev'),
-    sourcemaps = require('gulp-sourcemaps'),
     templateCache = require('gulp-angular-templatecache'),
     ts = require('gulp-typescript'),
-    eventStream = require('event-stream');
+    awspublish = require('gulp-awspublish'),
+    s3 = require('./s3');
 
 var livereloadport = 35729,
     serverport = 5000;
@@ -35,8 +35,7 @@ devServer.all('/*', function (req, res) {
 
 // PATHS
 var pathToIndexFile = 'src/index.html';
-var pathToJsSource = ['src/app/**/*.js', 'src/core/**/*.js'];
-var pathToTsSource = ['src/app/**/*.ts', 'src/core/**/*.ts'];
+var pathToTsSource = 'src/app/**/*.ts';
 var pathToCssSource = 'src/app/**/*.scss';
 var pathToTemplates = 'src/app/**/*.html';
 
@@ -51,20 +50,10 @@ gulp.task('dev', [
 });
 
 gulp.task('buildDev', [
-    'buildJs',
     'buildTs',
     'buildStyle',
     'cacheTemplates'
 ], function () {
-});
-
-gulp.task('buildJs', function () {
-    gulp.src(pathToJsSource)
-        .pipe(sourcemaps.init())
-        .pipe(concat('all-js-source.js'))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('src/build'))
-        .pipe(refresh(lrserver));
 });
 
 gulp.task('buildTs', function () {
@@ -98,7 +87,6 @@ gulp.task('startDevServer', function () {
 });
 
 gulp.task('watchSource', function () {
-    gulp.watch(pathToJsSource, ['buildJs', 'lint']);
     gulp.watch(pathToTsSource, ['buildTs']);
     gulp.watch(pathToCssSource, ['buildStyle']);
     gulp.watch(pathToIndexFile, ['reloadIndex']);
@@ -108,12 +96,6 @@ gulp.task('watchSource', function () {
 gulp.task('reloadIndex', function () {
     gulp.src(pathToIndexFile)
         .pipe(refresh(lrserver));
-});
-
-gulp.task('lint', function () {
-    gulp.src(pathToJsSource)
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
 });
 
 
@@ -142,7 +124,7 @@ gulp.task('cleanDistFolder', function (cb) {
 });
 
 gulp.task('buildDist', function () {
-    gulp.src('src/index.html')
+    gulp.src('src/app/index.html')
         .pipe(usemin({
             css: [minifyCss()],
             html: [minifyHtml({empty: true})],
@@ -160,4 +142,15 @@ gulp.task('startProdServer', function () {
         res.sendFile('index.html', {root: 'dist'});
     });
     server.listen(serverport);
+});
+
+gulp.task('s3', function () {
+    var publisher = awspublish.create(s3);
+    var headers = {
+        'Cache-Control': 'max-age=5, no-transform, public' // 5 seconds cache TTL
+    };
+    return gulp.src('dist/**/*')
+        .pipe(publisher.publish(headers))
+        .pipe(publisher.cache()) // create a cache file to speed up consecutive uploads
+        .pipe(awspublish.reporter());
 });

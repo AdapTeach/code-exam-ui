@@ -1,10 +1,11 @@
 <h1>Login</h1>
 
-<h3 ng-if="persona.loggedUser">You are already logged in</h3>
+<h3 ng-if="persona.loggedUser">Logged in as {{persona.loggedUser.email}}</h3>
 
 <persona-login ng-if="!persona.loggedUser">
     <md-button class="md-button md-deep-orange-theme">Login</md-button>
 </persona-login>
-<persona-logout>
+
+<persona-logout ng-if="persona.loggedUser">
     <md-button class="md-button md-deep-red-theme">Logout</md-button>
 </persona-logout>
