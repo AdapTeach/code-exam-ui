@@ -18,8 +18,9 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     templateCache = require('gulp-angular-templatecache'),
     ts = require('gulp-typescript'),
-    awspublish = require('gulp-awspublish'),
-    s3 = require('./s3');
+    awspublish = require('gulp-awspublish');
+
+var s3 = require('./s3');
 
 var livereloadport = 35729,
     serverport = 5000;

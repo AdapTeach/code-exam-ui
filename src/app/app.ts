@@ -27,8 +27,10 @@ angular.module('app', [
 
     .run(function (persona, $mdToast) {
         persona.addLoginListener(function (loggedUser) {
+            var email = "No Email";
+            if (loggedUser.email) email = loggedUser.email;
             $mdToast.show({
-                template: '<md-toast>Logged in as ' + loggedUser.email + '</md-toast>'
+                template: '<md-toast>Logged in as ' + email + '</md-toast>'
             });
         });
         persona.addLogoutListener(function () {
