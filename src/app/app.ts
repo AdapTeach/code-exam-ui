@@ -1,6 +1,13 @@
-// TODO Switch automatically
-//var BACKEND_URL = 'http://localhost:5100';
-var BACKEND_URL = 'https://codexam-adapteach.rhcloud.com';
+var DEV_BACKEND_URL = 'http://localhost:5100';
+var PROD_BACKEND_URL = 'https://codexam-adapteach.rhcloud.com';
+var BACKEND_URL;
+
+if (window.location.hostname === 'localhost') {
+    BACKEND_URL = DEV_BACKEND_URL;
+    //BACKEND_URL = PROD_BACKEND_URL;
+} else {
+    BACKEND_URL = PROD_BACKEND_URL;
+}
 
 angular.module('app', [
     'ngMaterial',
@@ -26,11 +33,9 @@ angular.module('app', [
     })
 
     .run(function (persona, $mdToast) {
-        persona.addLoginListener(function (loggedUser) {
-            var email = "No Email";
-            if (loggedUser.email) email = loggedUser.email;
+        persona.addLoginListener(function () {
             $mdToast.show({
-                template: '<md-toast>Logged in as ' + email + '</md-toast>'
+                template: '<md-toast>Logged In</md-toast>'
             });
         });
         persona.addLogoutListener(function () {
