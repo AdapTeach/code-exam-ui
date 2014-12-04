@@ -1,0 +1,9 @@
+<pre>{{ ResultService.current | json }}</pre>
+
+
+<div ng-repeat="detail in ResultService.current.details">
+    {{ detail.assessmentId }}
+    <pre ng-repeat="compilationUnit in detail.submission">
+        {{ compilationUnit.code }}
+    </pre>
+</div>

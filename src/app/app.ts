@@ -16,7 +16,8 @@ angular.module('app', [
     'angular-persona-jwt',
     'login',
     'assessment',
-    'at.assessment'
+    'at.assessment',
+    'result'
 ])
     .constant('BACKEND', {
         URL: BACKEND_URL
