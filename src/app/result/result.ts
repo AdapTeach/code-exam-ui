@@ -3,7 +3,7 @@
 
 class ResultService {
 
-    current = {message: 'loading result'};
+    current:any = {message: 'loading result'};
 
     // @ngInject
     constructor(private $http:ng.IHttpService, private BACKEND) {
