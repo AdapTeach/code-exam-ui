@@ -2,7 +2,7 @@
 
 class SubmissionResult {
 
-    compilationUnits:Array<CompilationUnit>;
+    submittedCompilationUnits:Array<CompilationUnit>;
     hasCompilationErrors:boolean;
 
 }

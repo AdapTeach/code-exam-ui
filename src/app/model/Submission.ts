@@ -2,6 +2,6 @@
 
 class Submission {
 
-    compilationUnits:Array<CompilationUnit>;
+    submittedCompilationUnits:Array<CompilationUnit>;
 
 }

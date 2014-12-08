@@ -22,7 +22,7 @@ class AssessmentService {
                 var raw = data.assessment;
                 var edited = angular.copy(data.assessment);
                 if (this.latestSubmission) {
-                    edited.compilationUnitsToSubmit = angular.copy(this.latestSubmission.compilationUnits);
+                    edited.compilationUnitsToSubmit = angular.copy(this.latestSubmission.submittedCompilationUnits);
                 }
                 this.current = {
                     raw: raw,
