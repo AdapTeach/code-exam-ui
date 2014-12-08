@@ -1,6 +1,7 @@
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 src/build
+src/vendor
 dist
 
 node_modules

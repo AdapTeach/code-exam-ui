@@ -10,14 +10,14 @@ class StudentProfile {
 
     save:Function = () => {
         this.$http
-            .put(BACKEND_URL + '/me', {email: this.email})
+            .put(BACKEND_URL + '/me', {studentEmail: this.email})
             .success(() => {
                 this.$window.alert('Email successfully saved')
             })
             .error((error) => {
                 this.$window.alert('Error saving email : ' + error.message);
             });
-    }
+    };
 
     load() {
         this.$http
@@ -34,7 +34,7 @@ angular.module('student.profile', [])
     .service('StudentProfile', StudentProfile)
 
     .run(function (persona, StudentProfile:StudentProfile) {
-        persona.addLoginListener(function (loggedUser) {
+        persona.addLoginListener(function () {
             StudentProfile.load();
         });
         persona.addLogoutListener(function () {

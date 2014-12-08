@@ -34,19 +34,21 @@ angular.module('app', [
     })
 
     .run(function (persona, $mdToast) {
-        persona.addLoginListener(function () {
-            $mdToast.show({
-                template: '<md-toast>Logged In</md-toast>'
+        persona.init().then(function () {
+            persona.addLoginListener(function () {
+                $mdToast.show({
+                    template: '<md-toast>Logged In</md-toast>'
+                });
             });
-        });
-        persona.addLogoutListener(function () {
-            $mdToast.show({
-                template: '<md-toast>Logged out</md-toast>'
+            persona.addLogoutListener(function () {
+                $mdToast.show({
+                    template: '<md-toast>Logged out</md-toast>'
+                });
             });
-        });
-        persona.addLoginFailListener(function () {
-            $mdToast.show({
-                template: '<md-toast>Login failed</md-toast>'
+            persona.addLoginFailListener(function () {
+                $mdToast.show({
+                    template: '<md-toast>Login failed</md-toast>'
+                });
             });
-        });
+        })
     });
